@@ -9,7 +9,6 @@ def mean_var(returns):
 
     expected_returns = returns.mean(dim=0)
     cov_matrix = np.cov(returns, rowvar=False)
-    cond_number = np.linalg.cond(cov_matrix)
 
     risk_aversion = 0.5
     n = len(expected_returns)
