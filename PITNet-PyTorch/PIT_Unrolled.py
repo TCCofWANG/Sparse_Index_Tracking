@@ -112,13 +112,12 @@ class z_Update_Layer(nn.Module):
         v = W2 + self.rho * (self.w + (1 / N) * torch.matmul(theta, q_t) - u)
         z = torch.matmul(W1, v)
         z = F.relu(z)
-        # 挑选前k个元素
         _, indices = torch.topk(z, self.topk, dim=-1)
         mask = torch.zeros_like(z)
         mask.scatter_(dim=-1, index=indices, src=torch.ones_like(indices, dtype=z.dtype))
         z = z * mask
 
-        epsilon = 1e-8     # 归一化处理
+        epsilon = 1e-8     
         z = z / (torch.sum(z) + epsilon)
         PIT_data['z'] = z
         return PIT_data, q_t
@@ -160,13 +159,12 @@ class final_Layer(nn.Module):
         z = torch.matmul(temp, v)
 
         z = F.relu(z)
-        # 挑选前k个元素
         _, indices = torch.topk(z, self.topk, dim=-1)
         mask = torch.zeros_like(z)
         mask.scatter_(dim=-1, index=indices, src=torch.ones_like(indices, dtype=z.dtype))
         z = z * mask
 
-        epsilon = 1e-8  # 归一化处理
+        epsilon = 1e-8  
         z = z / (torch.sum(z) + epsilon)
         PIT_data['z'] = z
         return z
