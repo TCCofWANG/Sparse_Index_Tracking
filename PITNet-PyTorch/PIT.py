@@ -8,10 +8,6 @@ df = df.set_index('Date')
 
 
 def avg_return(df, K):
-    '''
-    This function gets the dataframe as input, processes it, and outputs the average daily returns
-    of the stocks that are used as input for training the model.
-    '''
     # Calculate daily returns
     df = df.pct_change()
     df = df.tail(-1)  # Remove the first row containing NaN values due to pct_change
@@ -32,15 +28,6 @@ def avg_return(df, K):
 
 
 def Sharpe_ratios(df, K, risk_free_rate=0):
-    '''
-    This function gets the dataframe as input, processes it, and outputs the Sharpe ratios
-    of the stocks that are used as input for training the model.
-    参数:
-    - df: 输入的数据帧（DataFrame）
-    - risk_free_rate: 无风险利率（默认值为0）
-    返回:
-    - sharpe_ratios: 每支股票的夏普比率 (torch.Tensor)
-    '''
     # Calculate daily returns
     daily_returns = df.pct_change()
     daily_returns = daily_returns.tail(-1)  # Remove the first row containing NaN values due to pct_change
@@ -93,7 +80,7 @@ def PIT_admm(A, r, q_t, K=50, rho=0.01, iterations=1000, tol=1e-4):
     u = torch.zeros(w.shape)
     ones = torch.ones(471)
     eta = 0.003
-    # 预计算矩阵
+
 
     ATA = torch.matmul(A.T, A)
     I = torch.eye(A.shape[1])
