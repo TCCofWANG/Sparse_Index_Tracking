@@ -13,7 +13,6 @@ def SSPO_fun(b_t_hat):
     eta = 0.005
     x = -b_t_hat
     tao = lambda_ / gamma
-    start_time = time.time()  # 记录迭代开始时间
     # Main
 
     stock_num = b_t_hat.shape[0]
@@ -38,10 +37,6 @@ def SSPO_fun(b_t_hat):
 
     b_tplus1_hat = zeta * b
     w_opt = simplex_projection_selfnorm2(b_tplus1_hat, 1)
-    # Count the number of non-zero elements in w
-    weight_sum = torch.sum(w_opt)
-    end_time = time.time()  # 记录结束时间
-    #print("SSPO Algorithm iter Time:", end_time - start_time, "seconds")
     return w_opt
 
 
